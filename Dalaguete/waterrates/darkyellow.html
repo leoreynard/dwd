@@ -1,0 +1,560 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Rates - DwD</title>
+    <link rel="icon" href="../images/DWD LOGO.png" type="image/png" />
+
+    <style>
+       
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0a192f, #1e3a6b, #0a68a3);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+            .back-btn:hover {
+                background: linear-gradient(135deg, #0056b3, #004494);
+                transform: scale(1.12) rotate(-2deg);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+                border: 2px solid white;
+            }
+
+            .back-btn:active {
+                transform: scale(1.05) rotate(0deg);
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        header h1, h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .header {
+            font-weight: bold;
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        header .header-btn {
+            background: skyblue;
+            color: #004b8d;
+            padding: 18px 20px; /* Increased padding for better size */
+            border: 2px solid white;
+            border-radius: 5px; /* More rounded button */
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: background 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.3s ease, color 0.3s ease; /* Added color transition */
+            cursor: pointer; /* Ensures the cursor changes on hover */
+            display: inline-block; /* Ensures button remains inline with the header */
+        }
+
+            header .header-btn:hover {
+                background: #002a5e;
+                color: #ff9800;
+                transform: translateY(-5px); /* More dramatic button hover effect */
+                font-size: 20px;
+            }
+
+            header .header-btn:active {
+                transform: translateY(2px); /* Slight push-down effect on click */
+                box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); /* Lighter shadow when clicked */
+            }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px; /* Adjusted padding on mobile */
+                width: 85%; /* Slightly reduced width on mobile */
+                flex-direction: column; /* Stack button vertically */
+                gap: 20px; /* Increased gap for spacing between button and logo */
+            }
+
+                header .header-btn {
+                    padding: 12px 25px; /* Larger button for mobile */
+                    font-size: 20px; /* Larger font size for easier readability */
+                    width: 100%; /* Make button span the full width on mobile */
+                }
+        }
+
+
+        .cell {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border-color: black;
+        }
+
+            .cell:hover {
+                transform: scale(1.05);
+                background: #f0f8ff;
+            }
+        /* Coloring Amount and Final Amount Columns */
+        .AMOUNT {
+            background-color: #ff9800 !important; /* Gold color */
+            font-weight: bold;
+            color: black;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+
+            <a href="../index.html" class="back-btn">⬅ Back</a>
+            <h1 style="
+                 font-size:60px;
+                 font-weight:bold;
+                 background:linear-gradient(90deg, #ff8c00, #e52e71, #9b63e3, #4c8bf5, #00ffc3);
+                 -webkit-background-clip:text;
+                 color:transparent;
+                 text-shadow:2px 2px 5px rgba(0,0,0,0.5);
+                 text-transform:uppercase;">
+                 DALAGUETE WATER DISTRICT
+                </h1>
+          
+
+            <h2 style="
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0D47A1;
+            background: linear-gradient(to right, #E3F2FD, #BBDEFB);
+            padding: 12px 20px;
+            border-left: 8px solid #1976D2;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;">
+            Schedule of Approved Water Rates for Commercial C ½ 
+        </h2>
+           
+            <a href="pink.html" class="header-btn">Commercial ½ </a>
+            <a href="skyblue.html" class="header-btn">Commercial ¾ </a>
+            <a href="pink2.html" class="header-btn">Commercial 1 ½ </a>
+            <a href="lightblue.html" class="header-btn">Commercial A ½ </a>
+            <a href="green.html" class="header-btn">Commercial B </a>
+            <a href="bulk.html" class="header-btn">Bulk/Wholesale ½ </a>
+            <a href="summary.html" class="header-btn"> SUMMARY </a>
+
+        </header>
+        <div class="grid">
+            <div class="header">Cubic Meter Consumed</div>
+            <div class="header">RATES</div>
+            <div class="header">AMOUNT</div>
+            <div class="header">Cubic Meter Consumed</div>
+            <div class="header">RATES</div>
+            <div class="header">AMOUNT</div>
+            <div class="cell">0-10</div>
+            <div class="cell">minimum</div>
+            <div class="cell AMOUNT">125.75</div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell AMOUNT">1,190.85</div>
+            <div class="cell">11</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">139.80</div>
+            <div class="cell">69</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,211.80</div>
+            <div class="cell">12</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">153.85</div>
+            <div class="cell">70</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,232.75</div>
+            <div class="cell">13</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">167.90</div>
+            <div class="cell">71</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,253.70</div>
+            <div class="cell">14</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">181.95</div>
+            <div class="cell">72</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,274.65</div>
+            <div class="cell">15</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">196.00</div>
+            <div class="cell">73</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,295.60</div>
+            <div class="cell">16</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">210.05</div>
+            <div class="cell">74</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,316.55</div>
+            <div class="cell">17</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">224.10</div>
+            <div class="cell">75</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,337.50</div>
+            <div class="cell">18</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">238.15</div>
+            <div class="cell">76</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,358.45</div>
+            <div class="cell">19</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">252.20</div>
+            <div class="cell">77</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,379.40</div>
+            <div class="cell">20</div>
+            <div class="cell">14.05</div>
+            <div class="cell AMOUNT">266.25</div>
+            <div class="cell">78</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,400.35</div>
+            <div class="cell">21</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">281.75</div>
+            <div class="cell">79</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,421.30</div>
+            <div class="cell">22</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">297.25</div>
+            <div class="cell">80</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,442.25</div>
+            <div class="cell">23</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">312.75</div>
+            <div class="cell">81</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,463.20</div>
+            <div class="cell">24</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">328.25</div>
+            <div class="cell">82</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,484.15</div>
+            <div class="cell">25</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">343.75</div>
+            <div class="cell">83</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,505.10</div>
+            <div class="cell">26</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">359.25</div>
+            <div class="cell">84</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,526.05</div>
+            <div class="cell">27</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">374.75</div>
+            <div class="cell">85</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,547.00</div>
+            <div class="cell">28</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">390.25</div>
+            <div class="cell">86</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,567.95</div>
+            <div class="cell">29</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">405.75</div>
+            <div class="cell">87</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,588.90</div>
+            <div class="cell">30</div>
+            <div class="cell">15.50</div>
+            <div class="cell AMOUNT">421.25</div>
+            <div class="cell">88</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,609.85</div>
+            <div class="cell">31</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">439.55</div>
+            <div class="cell">89</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,630.80</div>
+            <div class="cell">32</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">457.85</div>
+            <div class="cell">90</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,651.75</div>
+            <div class="cell">33</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">476.15</div>
+            <div class="cell">91</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,672.70</div>
+            <div class="cell">34</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">494.45</div>
+            <div class="cell">92</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,693.65</div>
+            <div class="cell">35</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">512.75</div>
+            <div class="cell">93</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,714.60</div>
+            <div class="cell">36</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">531.05</div>
+            <div class="cell">94</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,735.55</div>
+            <div class="cell">37</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">549.35</div>
+            <div class="cell">95</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,756.50</div>
+            <div class="cell">38</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">567.65</div>
+            <div class="cell">96</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,777.45</div>
+            <div class="cell">39</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">585.95</div>
+            <div class="cell">97</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,798.40</div>
+            <div class="cell">40</div>
+            <div class="cell">18.30</div>
+            <div class="cell AMOUNT">604.25</div>
+            <div class="cell">98</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,819.35</div>
+            <div class="cell">41</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">625.20</div>
+            <div class="cell">99</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,840.30</div>
+            <div class="cell">42</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">646.15</div>
+            <div class="cell">100</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,861.25</div>
+            <div class="cell">43</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">667.10</div>
+            <div class="cell">101</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,882.20</div>
+            <div class="cell">44</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">688.05</div>
+            <div class="cell">102</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,903.15</div>
+            <div class="cell">45</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">709.00</div>
+            <div class="cell">103</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,924.10</div>
+            <div class="cell">46</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">729.95</div>
+            <div class="cell">104</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,945.05</div>
+            <div class="cell">47</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">750.90</div>
+            <div class="cell">105</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,966.00</div>
+            <div class="cell">48</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">771.85</div>
+            <div class="cell">106</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,986.95</div>
+            <div class="cell">49</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">792.80</div>
+            <div class="cell">107</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,007.90</div>
+            <div class="cell">50</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">813.75</div>
+            <div class="cell">108</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,028.85</div>
+            <div class="cell">51</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">834.70</div>
+            <div class="cell">109</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,049.80</div>
+            <div class="cell">52</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">855.65</div>
+            <div class="cell">110</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,070.75</div>
+            <div class="cell">53</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">876.60</div>
+            <div class="cell">111</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,091.70</div>
+            <div class="cell">54</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">897.55</div>
+            <div class="cell">112</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,112.65</div>
+            <div class="cell">55</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">918.50</div>
+            <div class="cell">113</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,133.60</div>
+            <div class="cell">56</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">939.45</div>
+            <div class="cell">114</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,154.55</div>
+            <div class="cell">57</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">960.40</div>
+            <div class="cell">115</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,175.50</div>
+            <div class="cell">58</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">981.35</div>
+            <div class="cell">116</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,196.45</div>
+            <div class="cell">59</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,002.30</div>
+            <div class="cell">117</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,217.40</div>
+            <div class="cell">60</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,023.25</div>
+            <div class="cell">118</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,238.35</div>
+            <div class="cell">61</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,044.20</div>
+            <div class="cell">119</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,259.30</div>
+            <div class="cell">62</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,065.15</div>
+            <div class="cell">120</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,280.25</div>
+            <div class="cell">63</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,086.10</div>
+            <div class="cell">121</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,301.20</div>
+            <div class="cell">64</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,107.05</div>
+            <div class="cell">122</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,322.15</div>
+            <div class="cell">65</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,128.00</div>
+            <div class="cell">123</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,343.10</div>
+            <div class="cell">66</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,148.95</div>
+            <div class="cell">124</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,364.05</div>
+            <div class="cell">67</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,169.90</div>
+            <div class="cell">125</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,385.00</div>
+            <div class="cell">68</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">1,190.85</div>
+            <div class="cell">126</div>
+            <div class="cell">20.95</div>
+            <div class="cell AMOUNT">2,405.95</div>
+
+        </div>
+    </div>
+</body>
+</html>

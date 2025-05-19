@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalaguete Water District</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script>
+       
+        function verifyCaptcha() {
+            const userInput = document.getElementById("captcha-input").value;
+            if (userInput === captchaText) {
+                alert("Verification successful! Redirecting...");
+                window.location.replace("https://www.gov.ph"); // Redirect to GOV.PH
+            } else {
+                alert("Incorrect CAPTCHA. Please try again.");
+                generateCaptcha(); // Refresh CAPTCHA
+            }
+        }
+
+        window.open("https://www.gov.ph", "_self");
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+
+        .verification-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            margin: auto;
+        }
+
+        h2 {
+            color: black;
+        }
+
+        .captcha-box {
+            background: #eee;
+            padding: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+            letter-spacing: 3px;
+            user-select: none;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+            button:hover {
+                background: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <h2>Verify You Are a Human</h2>
+        <p>Enter the text shown below:</p>
+        <div class="captcha-box" id="captcha-display"></div>
+        <input type="text" id="captcha-input" placeholder="Enter CAPTCHA" maxlength="6">
+        <button onclick="verifyCaptcha()">Verify</button>
+    </div>
+</body>
+</html>

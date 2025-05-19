@@ -1,0 +1,732 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/DWD LOGO.png" type="image/png" />
+    <title>Billing and Reading Schedule </title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0 auto;
+            padding: 0;
+            
+            
+        }
+        header {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #004b8d;
+    padding: 15px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+    border-bottom: 3px solid #003f6b;
+    transition: all 0.3s ease-in-out;
+    letter-spacing: 0.5px;
+}
+
+   
+    header:hover {
+        background: #003f6b;
+        transform: translateY(-2px);
+    }
+
+    
+    header .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    header img {
+        height: 50px;
+        width: auto;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        header img:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+    
+    header .title {
+        color: white;
+        font-size: 26px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+        header .title:hover {
+            color: #ff9800;
+            transform: translateY(-5px);
+        }
+
+    
+    header ul {
+        align-items: center;
+        list-style: none;
+        display: flex;
+        gap: 5px;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    
+    header a {
+        text-decoration: none;
+        color: #ff9800;
+        font-weight: bold;
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease-in-out, box-shadow 0.3s ease;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        right: -100px;
+    }
+
+        
+        header a:hover {
+            background: #002a5e;
+            color: #ff9800;
+            transform: translateY(-4px);
+            border-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        header a:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.4);
+        }
+
+        
+     
+
+        
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            
+           
+           
+        }
+
+        tbody tr:hover {
+            background-color: skyblue; /* Light gray */
+            transition: background-color 0.3s ease;
+        }
+
+        /* Change cursor to pointer when hovering over table rows */
+        tbody tr {
+            cursor: pointer;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            
+        }
+
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-content {
+    background: #ffffff;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 12px;
+    width: 50%;
+    max-width: 500px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: transform 0.3s ease-in-out;
+    opacity: 0;
+    
+}
+
+.modal.show .modal-content {
+    transform: scale(1.5);
+    opacity: 1;
+    align-items: center;
+}
+
+.close {
+    color: #ff4d4d;
+    font-size: 22px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close:hover {
+    color: #ff0000;
+    transform: scale(1.2);
+}
+
+h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+
+ /* footer stylishhhh */
+/* footer stylishhhh */
+
+footer {
+    background-color: #daeafc;
+    color: #000000;
+    padding: 40px 0;
+            }
+
+        footer .footer-container {
+         display: flex;
+         justify-content: space-between;
+         align-items: flex-start;
+         max-width: 1200px;
+         margin: 0 auto;
+        }
+        footer .footer-logo 
+        {
+         text-align: center;
+         }
+
+        footer .footer-logo img {
+          max-height: 70px;
+          width: auto;
+          height: auto;
+          display: block;
+          margin: 0 auto 10px;
+        }
+
+        footer .footer-logo p {
+       
+        margin: 3px 0;
+        }
+
+
+        footer .footer-links,
+        footer .footer-consumer,
+        footer .footer-gov {
+        width: 20%;     
+        }
+
+        footer .footer-links h6,
+        footer .footer-consumer h6,
+        footer .footer-gov h6 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+                }
+
+        footer .footer-links ul,
+        footer .footer-consumer ul,
+        footer .footer-gov ul{
+         list-style: none;
+         padding-left: 0;
+            }
+            footer .footer-links p{
+                font-size: 1.2rem;
+            }
+
+        footer .footer-links ul li,
+        footer .footer-consumer ul li,
+        footer .footer-gov ul li {
+            margin-bottom: 10px;
+                }
+
+        footer .footer-links ul li a {
+        color: #040000;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+            }
+
+        footer .footer-links ul li a:hover {
+        color: #ff6f00;
+            }
+
+        footer .footer-gov ul li a {
+        color: #020000;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+        }
+
+        footer .footer-gov a:hover {
+        color: #ff6f00;
+        }
+
+
+        .footer-social {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    
+}
+
+.social-icon {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.social-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+        /* Mobile Responsiveness */
+
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .footer-logo {
+        flex: 1 1 250px;
+    }
+
+    .footer-links,
+    .footer-gov {
+        flex: 1 1 200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    footer {
+        padding: 40px 60px;
+    }
+
+    .footer-logo img {
+        max-width: 200px;
+    }
+}
+         
+
+#billing-schedule {
+    font-size: 48px;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #6c06fb, #fc4705,#fb06d2,#05e8fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    padding: 20px;
+    margin: 30px auto;
+    padding-top: 70px;
+  }
+
+  #billing-schedule::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 4px;
+    background: linear-gradient(135deg, #6c06fb, #fc4705,#fb06d2,#05e8fc);
+    border-radius: 2px;
+  }
+
+  #billingTable tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#billingTable tbody tr:hover {
+    background-color: #f0f8ff; /* light blue */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* subtle shadow */
+    transform: scale(1.01); /* slight zoom */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="../images/DWD LOGO.png" alt="Dalaguete Water District Logo">
+            <span class="title">DALAGUETE WATER DISTRICT</span>
+        </div>
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> home</a></li>
+            <li><a href="../links/faqs.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+            <li><a href="../links/contactus.html"><i class="fas fa-address-book"></i> Contact Us</a></li>
+        </ul>
+    </header>
+
+    <h2 id="billing-schedule">Billing and Reading Schedule</h2>
+
+    <input type="text" id="searchBox" onkeyup="filterTable()" placeholder="Search for zone or due date...">
+    <table id="billingTable">
+        <thead>
+            
+            <tr>
+                <th>Zone</th>
+                <th>Reading Date</th>
+                <th>Due Date</th>
+                <th>Penalty</th>
+                <th>Disconnection Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+
+
+            <tr onclick="showPopup('Zone 11', 1, 14, 15, 22)">
+                <td style="background-color: pink;">Zone 11</td>
+                <td style="background-color: pink;">1st of the month</td>
+                <td style="background-color: violet;">14th of the month</td>
+                <td style="background-color: violet;">15th of the month</td>
+                <td style="background-color: violet;">22nd of the month</td>
+            </tr>
+            
+            <tr onclick="showPopup('Zone 21', 1, 14, 15, 22)">
+                <td style="background-color: pink;">Zone 21</td>
+                <td style="background-color: pink;">1st of the month</td>
+                <td style="background-color: violet;">14th of the month</td>
+                <td style="background-color: violet;">15th of the month</td>
+                <td style="background-color: violet;">22nd of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 31', 1, 14, 15, 22)">
+               
+                <td style="background-color: pink;">Zone 31</td>
+                <td style="background-color: pink;">1st of the month</td>
+                <td style="background-color: violet;">14th of the month</td>
+                <td style="background-color: violet;">15th of the month</td>
+                <td style="background-color: violet;">22nd of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 41', 2, 14, 15, 22)">
+                <td style="background-color:yellow;">Zone 41</td>
+                <td style="background-color: yellow;">2nd of the month</td>
+                <td style="background-color: violet;">14th of the month</td>
+                <td style="background-color: violet;">15th of the month</td>
+                <td style="background-color: violet;">22nd of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 51', 2, 14, 15, 22)">
+                <td style="background-color: yellow;">Zone 51</td>
+                <td style="background-color: yellow;">2nd of the month</td>
+                <td style="background-color: violet;">14th of the month</td>
+                <td style="background-color: violet;">15th of the month</td>
+                <td style="background-color: violet;">22nd of the month</td>
+
+            </tr>
+            <tr onclick="showPopup('Zone 52', 2, 14, 15, 22)">
+                <td style="background-color:yellow;">Zone 52</td>
+                <td style="background-color: yellow;">2nd of the month</td>
+                <td style="background-color: violet;">14th of the month</td>
+                <td style="background-color: violet;">15th of the month</td>
+                <td style="background-color: violet;">22nd of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 63', 3, 16, 21, 24)">
+                <td style="background-color: yellowgreen;">Zone 63</td>
+                <td style="background-color: yellowgreen;">3rd of the month</td>
+                <td style="background-color: pink;">16th of the month</td>
+                <td style="background-color: pink;">21st of the month</td>
+                <td style="background-color: pink;">24th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 61', 3, 16, 21, 24)">
+                <td style="background-color: yellowgreen;">Zone 61</td>
+                <td style="background-color: yellowgreen;">3rd of the month</td>
+                <td style="background-color: pink;">16th of the month</td>
+                <td style="background-color: pink;">21st of the month</td>
+                <td style="background-color: pink;">24th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 62', 4, 16, 21, 24,)">
+                <td style="background-color: pink;">Zone 62</td>
+                <td style="background-color: pink;">4th of the month</td>
+                <td style="background-color: pink;">16th of the month</td>
+                <td style="background-color: pink;">21st of the month</td>
+                <td style="background-color: pink;">24th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 71', 4, 16, 21, 24)">
+                <td style="background-color:pink;">Zone 71</td>
+                <td style="background-color: pink;">4th of the month</td>
+                <td style="background-color: pink;">16th of the month</td>
+                <td style="background-color: pink;">21st of the month</td>
+                <td style="background-color: pink;">24th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 72', 7, 21, 22, 28)">
+                <td style="background-color: cornflowerblue;">Zone 72</td>
+                <td style="background-color: cornflowerblue;">7th of the month</td>
+                <td style="background-color: cornflowerblue;">21st of the month</td>
+                <td style="background-color: cornflowerblue;">22nd of the month</td>
+                <td style="background-color: cornflowerblue;">28th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 73', 7, 21, 22, 28)">
+                <td style="background-color:cornflowerblue;">Zone 73</td>
+                <td style="background-color: cornflowerblue;">7th of the month</td>
+                <td style="background-color: cornflowerblue;">21st of the month</td>
+                <td style="background-color: cornflowerblue;">22nd of the month</td>
+                <td style="background-color: cornflowerblue;">28th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 74', 8, 21, 22, 28)">
+                <td style="background-color: orange;">Zone 74</td>
+                <td style="background-color: orange;">8th of the month</td>
+                <td style="background-color: cornflowerblue;">21st of the month</td>
+                <td style="background-color: cornflowerblue;">22nd of the month</td>
+                <td style="background-color: cornflowerblue;">28th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 81', 8, 21, 22, 28)">
+                <td style="background-color: orange;">Zone 81</td>
+                <td style="background-color: orange;">8th of the month</td>
+                <td style="background-color: cornflowerblue;">21st of the month</td>
+                <td style="background-color: cornflowerblue;">22nd of the month</td>
+                <td style="background-color: cornflowerblue;">28th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 82', 9, 22, 23, 29 )">
+                <td style="background-color: cornflowerblue;">Zone 82</td>
+                <td style="background-color: cornflowerblue;">9th of the month</td>
+                <td style="background-color: yellow;">22nd of the month</td>
+                <td style="background-color: yellow;">23rd of the month</td>
+                <td style="background-color: yellow;">29th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 83', 9, 22, 23, 29)">
+                <td style="background-color: cornflowerblue;">Zone 83</td>
+                <td style="background-color: cornflowerblue;">9th of the month</td>
+                <td style="background-color: yellow;">22nd of the month</td>
+                <td style="background-color: yellow;">23rd of the month</td>
+                <td style="background-color: yellow;">29th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 85', 9, 22, 23, 29)">
+                <td style="background-color: cornflowerblue;">Zone 85</td>
+                <td style="background-color: cornflowerblue;">9th of the month</td>
+                <td style="background-color: yellow;">22nd of the month</td>
+                <td style="background-color: yellow;">23rd of the month</td>
+                <td style="background-color: yellow;">29th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 93', 9, 22, 23, 29)">
+                <td style="background-color: cornflowerblue;">Zone 93</td>
+                <td style="background-color: cornflowerblue;">9th of the month</td>
+                <td style="background-color: yellow;">22nd of the month</td>
+                <td style="background-color: yellow;">23rd of the month</td>
+                <td style="background-color: yellow;">29th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 91', 10, 22, 23, 29)">
+                <td style="background-color: pink;">Zone 91</td>
+                <td style="background-color: pink;">10th of the month</td>
+                <td style="background-color: yellow;">22nd of the month</td>
+                <td style="background-color: yellow;">23rd of the month</td>
+                <td style="background-color: yellow;">29th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 92', 10, 22, 23, 29)">
+                <td style="background-color: pink;">Zone 92</td>
+                <td style="background-color: pink;">10th of the month</td>
+                <td style="background-color: yellow;">22nd of the month</td>
+                <td style="background-color: yellow;">23rd of the month</td>
+                <td style="background-color: yellow;">29th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 101', 11, 25, 28, 2)">
+                <td style="background-color: greenyellow;">Zone 101</td>
+                <td style="background-color: greenyellow;">11th of the month</td>
+                <td style="background-color: greenyellow;">25th of the month</td>
+                <td style="background-color: greenyellow;">28th of the month</td>
+                <td style="background-color: greenyellow;">2nd of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 102', 11, 25, 28, 2)">
+                <td style="background-color: limegreen;">Zone 102</td>
+                <td style="background-color: limegreen;">11th of the month</td>
+                <td style="background-color: greenyellow;">25th of the month</td>
+                <td style="background-color: greenyellow;">28th of the month</td>
+                <td style="background-color: greenyellow;">2nd of the month</td>
+
+            </tr>
+            <tr onclick="showPopup('Zone 103', 11, 25, 28, 2)">
+                <td style="background-color: limegreen;">Zone 103</td>
+                <td style="background-color: limegreen;">11th of the month</td>
+                <td style="background-color: greenyellow;">25th of the month</td>
+                <td style="background-color: greenyellow;">28th of the month</td>
+                <td style="background-color: greenyellow;">2nd of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 105', 8, 22, 23, 28)">
+                <td style="background-color:pink;">Zone 105</td>
+                <td style="background-color:pink;">8th of the month</td>
+                <td style="background-color: pink;">22nd of the month</td>
+                <td style="background-color: pink;">23rd of the month</td>
+                <td style="background-color: pink;">28th of the month</td>
+            </tr>
+            <tr onclick="showPopup('Zone 106', 10, 25, 28, 2)">
+                <td style="background-color:coral;">Zone 106</td>
+                <td style="background-color:coral;">10th of the month</td>
+                <td style="background-color: coral;">25th of the month</td>
+                <td style="background-color: coral;">28th of the month</td>
+                <td style="background-color: coral;">2nd of the month</td>
+
+        </tbody>
+    </table>
+
+    <div id="popup" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h3 id="popupTitle"></h3>
+            <p><strong>Reading Date:</strong> <span id="popupBillingDate"></span></p>
+            <p><strong>Due Date:</strong> <span id="popupDueDate"></span></p>
+            <p><strong>Penalty Date:</strong> <span id="popupPenalty"></span></p>
+            <p><strong>Disconnection Date:</strong> <span id="popupDisconnection"></span></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                      <h6>&copy; 2025 Dalaguete Water District</h6>
+                      <p>Located at Osorio Building</p>
+                      <p>Sarmiento Street</p>
+                      <p>Poblacion Dalaguete, Cebu</p>
+                      <p><i class="fas fa-phone-alt"></i> (032) 484-8724</p>
+                             <p id="clock" style="margin-top: 10px; font-weight: bold; color: #030200; line-height: 1.4;">
+                    
+                              <span id="clock-time" style="display: block; font-size: 1.1em;"></span>
+                              <span id="clock-date" style="display: block; font-size: 0.9em; font-weight: normal;"></span>
+                            </p>
+
+            </div>
+               
+            
+                 <div class="footer-links">
+                    <h6>Transparency</h6>
+                    <ul>
+                        <li><a href="../links/about.html">About Us</a></li>
+                        <li><a href="../links/citizen.html">Citizen Charter</a></li>
+                        <li><a href="../links/bids.html">Bids & Awards</a></li>
+                        <li><a href="../links/faqs.html">FAQs</a></li>
+                        <li><a href="../links/contactus.html">Contact Us</a></li>
+                        <li><a href="../links/profile.html">Profile</a></li>
+                   
+                
+                    </ul>
+                 </div>
+                 
+            <div class="footer-links">
+                <h6> Consumer </h6>
+                <ul>
+                    <li><a href="../waterrates/waterrates.html">Water Rates</a></li>
+                    <li><a href="../links/calculator.html">Water Bill Calculator</a></li>
+                    <li><a href="../links/billing.html">Billing Schedule</a></li>
+                    <li><a href="../links/inquiry.html">Billing Inquiry</a></li>
+                   
+                </ul>
+            </div>
+            <div class="footer-gov">
+                <h6>Government Links</h6>
+                <ul>
+                  
+                    <li><a  href="http://president.gov.ph/">Office of the President</a></li>
+                    <li><a  href="http://ovp.gov.ph/">Office of the Vice President</a></li>
+                    <li><a  href="http://www.senate.gov.ph/">Senate of the Philippines</a></li>
+                    <li><a  href="http://www.congress.gov.ph/">House of Representatives</a></li>
+                    <li><a  href="http://sc.judiciary.gov.ph/">Supreme Court</a></li>
+                    <li><a  href="http://ca.judiciary.gov.ph/">Court of Appeals</a></li>
+                    <li><a  href="http://sb.judiciary.gov.ph/">Sandiganbayan</a></li>
+                 
+                </ul>
+            
+       
+      </div>
+    </footer>
+    
+       
+
+    <script src="../script.js"></script> 
+
+</body>
+</html>

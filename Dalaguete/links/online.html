@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="DWD LOGO.png" type="image/png" />
+    <link rel="stylesheet" href="style.css">
+    <title>Pay Water Bill via GCash</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #001f3f;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #003366;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            margin: 50px auto;
+            position: relative;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 30px;
+            line-height: 1.5;
+        }
+
+        .step {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .active {
+            display: block;
+            opacity: 1;
+        }
+
+        .btn {
+            background-color: #00aaff;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 45%;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #0088cc;
+            }
+
+        .progress-bar {
+            width: 100%;
+            background: #004488;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 10px;
+            width: 0%;
+            background: #00ccff;
+            transition: width 0.5s;
+        }
+        .step-image {
+    width: 100%; /* Makes the image responsive to the container width */
+    max-width: 400px; /* You can adjust the max-width to your preference */
+    height: auto; /* Maintain the aspect ratio of the image */
+    margin-top: 20px; /* Adds space between the text and the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="DWD LOGO.png" alt="Dalaguete Water District Logo">
+            <span class="title">DALAGUETE WATER DISTRICT</span>
+        </div>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> home</a></li>
+            <li><a href="faqs.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+            <li><a href="contactus.html"><i class="fas fa-address-book"></i> Contact Us</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <h2>Pay Water Bill via GCash</h2>
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>
+
+        <div class="step active" id="step1">
+            <h3>Step 1</h3>
+            <p>Open your GCash app and log in to your account.</p>
+            <img src="step1.jpg" alt="Step 1 Image" class="step-image">
+        </div>
+        <div class="step" id="step2">
+            <h3>Step 2</h3>
+            <p>On the home screen, tap on "Bills".</p>
+            <img src="step2.jpg" alt="Step 2 Image" class="step-image">
+        </div>
+        <div class="step" id="step3">
+            <h3>Step 3</h3>
+            <p>Select or Tap "Water Utilities" </p>
+            <img src="step3.jpg" alt="Step 3 Image" class="step-image">
+        </div>
+        <div class="step" id="step4">
+            <h3>Step 4</h3>
+            <p>Select or Tap "Dalaguete Water District"</p>
+            <img src="step4.jpg" alt="Step 4 Image" class="step-image">
+        </div>
+        <div class="step" id="step5">
+            <h3>Step 5</h3>
+            <p>"Enter the necessary details: your amount, account name, account number, and email address (optional)."</p>
+            <img src="step5.jpg" alt="Step 5 Image" class="step-image">
+        </div>
+        <div class="step" id="step6">
+            <h3>Step 6</h3>
+            <p>You will receive a confirmation message after a successful payment.</p>
+            <img src="step5gcash.jpg" alt="Step 6 Image" class="step-image">
+        </div>
+        
+
+        <button class="btn" id="prevBtn" onclick="prevStep()" disabled>Previous</button>
+        <button class="btn" id="nextBtn" onclick="nextStep()">Next</button>
+        <br>
+    
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach((el, index) => {
+                el.classList.remove('active');
+                if (index + 1 === step) {
+                    el.classList.add('active');
+                }
+            });
+            document.getElementById('progress').style.width = ((step - 1) / (totalSteps - 1)) * 100 + '%';
+            document.getElementById('prevBtn').disabled = step === 1;
+            document.getElementById('nextBtn').innerText = step === totalSteps ? "Finish" : "Next";
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            } else {
+                alert("You're all set! Your payment is complete.");
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+       
+    
+    </script>
+</body>
+</html>

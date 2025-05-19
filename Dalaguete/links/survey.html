@@ -1,0 +1,426 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Satisfaction Survey</title>
+    <!-- Add this inside your <head> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="../images/DWD LOGO.png" type="image/png" />
+
+    <style>
+        body {
+            background: linear-gradient(to right,#004b8d,#00ccff,#004b8d);
+            margin: 0;
+            padding: 0;
+            height: calc(70vh - 70px); /* Adjust 100px to the height of your footer */
+        }
+        /* header Styling */
+        header {
+            height: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #004b8d;
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+            border-bottom: 3px solid #003f6b;
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 0.5px;
+        }
+
+            /* Hover Effect for Header Bar */
+            header:hover {
+                background: #003f6b;
+                transform: translateY(-2px);
+            }
+
+            /* Logo Section */
+            header .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            header img {
+                height: 50px;
+                width: auto;
+                border-radius: 12px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                header img:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+            /* Title Styling */
+            header .title {
+                color: white;
+                font-size: 26px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+
+                header .title:hover {
+                    color: #ff9800;
+                    transform: translateY(-5px);
+                }
+
+            /* Header Menu */
+            header ul {
+                align-items: center;
+                list-style: none;
+                display: flex;
+                gap: 10px;
+                margin: 0 auto;
+                
+                
+               
+            }
+
+            /* header Links */
+            header a {
+                text-decoration: none;
+                color: #ff9800;
+                font-weight: bold;
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: 2px solid transparent;
+                transition: all 0.3s ease-in-out, box-shadow 0.3s ease;
+                font-size: 16px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                position: relative;
+            }
+
+                /* Hover Effects for Links */
+                header a:hover {
+                    background: #002a5e;
+                    color: #ff9800;
+                    transform: translateY(-4px);
+                    border-color: #fff;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                /* Focus Effect for Accessibility */
+                header a:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.4);
+                }
+
+        footer {
+           background-color: #daeafc !important;
+            color: #000000;
+            padding: 40px 0;
+        }
+
+            footer .footer-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            footer .footer-logo {
+                text-align: center;
+            }
+
+                footer .footer-logo img {
+                    max-height: 70px;
+                    width: auto;
+                    height: auto;
+                    display: block;
+                    margin: 0 auto 10px;
+                }
+
+                footer .footer-logo p {
+                    margin: 3px 0;
+                }
+            footer .footer-links,
+            footer .footer-consumer,
+            footer .footer-gov {
+                width: 20%;
+            }
+
+                footer .footer-links h6,
+                footer .footer-consumer h6,
+                footer .footer-gov h6 {
+                    font-size: 1.5rem;
+                    color: black;
+                    margin-bottom: 15px;
+                    text-transform: uppercase;
+                    padding-left: 5px; /* Adjust the value as needed */
+                    font-style: bolder;
+                }
+
+                footer .footer-links ul,
+                footer .footer-consumer ul,
+                footer .footer-gov ul {
+                    list-style: none;
+                    padding-left: 0;
+                   
+                }
+
+                footer .footer-links p {
+                    font-size: 1.2rem;
+                    color: black;
+                }
+
+                footer .footer-links ul li,
+                footer .footer-consumer ul li,
+                footer .footer-gov ul li {
+                    margin-bottom: 10px;
+                }
+
+                    footer .footer-links ul li a {
+                        color: #040000;
+                        text-decoration: none;
+                        font-size: 1.2rem;
+                        transition: color 0.3s ease;
+                    }
+
+                        footer .footer-links ul li a:hover {
+                            color: #ff6f00;
+                        }
+
+                    footer .footer-gov ul li a {
+                        color: #020000;
+                        text-decoration: none;
+                        font-size: 1.2rem;
+                        transition: color 0.3s ease;
+                    }
+
+                footer .footer-gov a:hover {
+                    color: #ff6f00;
+                }
+      
+
+        .footer-social {
+            position: relative;
+            display: flex;
+            gap: 12px;
+        }
+        /* Mobile Responsiveness */
+
+        @media (min-width: 768px) {
+            .footer-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+
+            .footer-logo {
+                flex: 1 1 250px;
+            }
+
+            .footer-links,
+            .footer-gov {
+                flex: 1 1 200px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            footer {
+                padding: 40px 60px;
+                background-color: white;
+            }
+
+            .footer-logo img {
+                max-width: 200px;
+                position: relative;
+                display: inline-block;
+                text-align: center;
+            }
+        }
+         .background-container {
+            background-image: url('bluebackground.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            height: 80vh; /* Adjust this value as needed */
+            margin-bottom: 70px; /* Adjust this value to match the height of your footer */
+        }
+        </style>
+    
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <header>
+        <div class="logo-container">
+            <img src="../images/DWD LOGO.png" alt="Dalaguete Water District Logo">
+            <span class="title">DALAGUETE WATER DISTRICT</span>
+        </div>
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../links/faqs.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+            <li><a href="../links/profile.html"><i class="fas fa-address-book"></i> Profile</a></li>
+        </ul>
+    </header>
+     <div class="background-container"></div>
+    <main class="flex-grow">
+<!-- Survey Container with Gradient Background -->
+<div class="survey-container max-w-3xl mx-auto my-10 p-8 shadow-2xl rounded-lg border border-gray-200 text-white"
+     style="background: linear-gradient(75deg, #3e3d3d, #000000, #000000, #393838);">
+  <h2 class="text-3xl font-extrabold text-blue-300 text-center mb-2">Consumer Survey</h2>
+  <p class="text-center text-gray-300 mb-6">We value your feedback! Please take a moment to complete our survey.</p>
+
+  <!-- Success Message -->
+  <div id="success-message" class="hidden bg-green-100 text-green-800 p-4 rounded-lg text-center mb-4">
+    ✅ Thank you! Your response has been submitted successfully.
+  </div>
+
+  <!-- Survey Form -->
+  <form id="survey-form" class="space-y-6" action="https://formspree.io/f/xvgkvljp" method="POST">
+    
+    <!-- Name -->
+    <div>
+      <label for="name" class="block text-white font-semibold mb-1">Full Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required
+             class="w-full bg-white text-black border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email" class="block text-white font-semibold mb-1">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email address" required
+             class="w-full bg-white text-black border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+    </div>
+
+    <!-- Service Satisfaction -->
+    <div>
+      <label for="satisfaction" class="block text-white font-semibold mb-1">
+        How satisfied are you with our service?
+      </label>
+      <select id="satisfaction" name="satisfaction" required
+              class="w-full bg-white text-black border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <option value="" disabled selected>Select an option</option>
+        <option value="Very Satisfied">Very Satisfied</option>
+        <option value="Satisfied">Satisfied</option>
+        <option value="Neutral">Neutral</option>
+        <option value="Dissatisfied">Dissatisfied</option>
+        <option value="Very Dissatisfied">Very Dissatisfied</option>
+      </select>
+    </div>
+
+    <!-- Comments -->
+    <div>
+      <label for="comments" class="block text-white font-semibold mb-1">Additional Comments:</label>
+      <textarea id="comments" name="comments" rows="4" placeholder="Share your thoughts or suggestions"
+                class="w-full bg-white text-black border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit"
+              class="bg-blue-600 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+        Submit Survey
+      </button>
+    </div>
+  </form>
+</div>
+
+
+    <footer class="bg-blue-600 text-white p-4">
+        <div class="footer-container" >
+        <div class="footer-links">
+            <h6 class="font-bold">&copy; 2025 Dalaguete Water District</h6>
+            <p>Located at Osorio Building</p>
+            <p>Sarmiento Street</p>
+            <p>Poblacion Dalaguete, Cebu</p>
+            <p><i class="fas fa-phone-alt"></i> (032) 484-8724</p>
+            <div class="footer-social" style="margin-top: 0 auto;">
+
+            </div>
+
+            <p id="clock" style="margin-top: 10px; font-weight: bold; color: #030200; line-height: 1.4;">
+
+                <span id="clock-time" style="display: block; font-size: 1.1em;"></span>
+                <span id="clock-date" style="display: block; font-size: 0.9em; font-weight: normal;"></span>
+            </p>
+
+        </div>
+        <div class="footer-links">
+            <h6 class="font-bold">Transparency</h6>
+            <ul>
+                <li><a href="../links/about.html">About Us</a></li>
+                <li><a href="../links/citizen.html">Citizen Charter</a></li>
+                <li><a href="../links/bids.html">Bids & Awards</a></li>
+                <li><a href="../links/faqs.html">FAQs</a></li>
+                <li><a href="../links/contactus.html">Contact Us</a></li>
+                <li><a href="../links/profile.html">Profile</a></li>
+
+
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h6 class="font-bold"> Consumer </h6>
+            <ul>
+                <li><a href="../waterrates/waterrates.html">Water Rates</a></li>
+                <li><a href="../links/calculator.html">Water Bill Calculator</a></li>
+                <li><a href="../links/billing.html">Billing Schedule</a></li>
+                <li><a href="../links/inquiry.html">Billing Inquiry</a></li>
+
+
+
+
+            </ul>
+        </div>
+        <div class="footer-gov">
+            <h6 class="font-bold">Government Links</h6>
+
+            <ul>
+
+                <li><a href="http://president.gov.ph/">Office of the President</a></li>
+                <li><a href="http://ovp.gov.ph/">Office of the Vice President</a></li>
+                <li><a href="http://www.senate.gov.ph/">Senate of the Philippines</a></li>
+                <li><a href="http://www.congress.gov.ph/">House of Representatives</a></li>
+                <li><a href="http://sc.judiciary.gov.ph/">Supreme Court</a></li>
+                <li><a href="http://ca.judiciary.gov.ph/">Court of Appeals</a></li>
+                <li><a href="http://sb.judiciary.gov.ph/">Sandiganbayan</a></li>
+
+            </ul>
+        </div>
+
+    </footer>
+
+
+                 <!-- Clock Script -->
+    <script>
+
+    function updateClock() {
+        const timeEl = document.getElementById("clock-time");
+        const dateEl = document.getElementById("clock-date");
+
+        const now = new Date();
+        const timeString = now.toLocaleTimeString(); // e.g., 2:45:12 PM
+        const dateString = now.toLocaleDateString(undefined, {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }); // e.g., Monday, April 22, 2025
+
+        timeEl.textContent = timeString;
+        dateEl.textContent = dateString;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+
+</body>
+</html>
