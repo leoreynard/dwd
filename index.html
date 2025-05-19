@@ -1,0 +1,1658 @@
+﻿<!DOCTYPE html>   
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalaguete Water District</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="images/DWD LOGO.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+   <script>
+        // SEARCH FUNCTION
+        function search() {
+            const query = document.querySelector('.search-input').value.trim().toLowerCase();
+            const pages = {
+                'contact': 'contactus.html',
+                'home': 'index.html',
+                'profile': 'profile.html',
+                'org chart': 'profile.html',
+                'about': 'about.html',
+                'faqs': 'faqs.html',
+                'gcash': 'online.html',
+                'fb': 'https://www.facebook.com/',
+                'water rates': 'waterrates.html',
+                'mission vision': 'about.html',
+                'dalaguete': 'index.html',
+                'survey': 'survey.html',
+                'transparency': 'trans.html',
+            };
+    
+            for (let key in pages) {
+                if (query.includes(key)) {
+                    window.location.href = pages[key];
+                    return;
+                }
+            }
+    
+            alert('No results found for "' + query + '".');
+        }
+    
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("searchInput");
+    
+            // Allow "Enter" to trigger search
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    search();
+                }
+            });
+    
+            const toggle = document.getElementById("searchToggle");
+            const icon = document.getElementById("searchIcon");
+            const container = document.getElementById("searchContainer");
+    
+            let isSearchOpen = false;
+    
+            toggle.addEventListener("click", (e) => {
+                e.stopPropagation(); // So it doesn't instantly close
+                isSearchOpen = !isSearchOpen;
+                input.classList.toggle("active");
+                icon.classList.toggle("fa-search");
+                icon.classList.toggle("fa-times");
+                if (isSearchOpen) input.focus();
+            });
+    
+            // Close on outside click
+            document.addEventListener("click", (event) => {
+                if (isSearchOpen && !container.contains(event.target)) {
+                    input.classList.remove("active");
+                    icon.classList.add("fa-search");
+                    icon.classList.remove("fa-times");
+                    isSearchOpen = false;
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0 auto;
+            padding: 0;
+            background: transparent;
+            color: #333;
+            scroll-behavior: smooth;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* header Styling */
+        header {
+            height: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #004b8d;
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+            border-bottom: 3px solid #003f6b;
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 0.5px;
+        }
+
+            /* Hover Effect for Header Bar */
+            header:hover {
+                background: #003f6b;
+                transform: translateY(-2px);
+            }
+
+            /* Logo Section */
+            header .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            header img {
+                height: 50px;
+                width: auto;
+                border-radius: 12px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                header img:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+            /* Title Styling */
+            header .title {
+                color: white;
+                font-size: 26px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+
+                header .title:hover {
+                    color: #ff9800;
+                    transform: translateY(-5px);
+                }
+
+            /* Header Menu */
+            header ul {
+                align-items: center;
+                list-style: none;
+                display: flex;
+                gap: 5px;
+                margin: 0 auto;
+                padding: 0;
+            }
+
+            /* header Links */
+            header a {
+                text-decoration: none;
+                color: #ff9800;
+                font-weight: bold;
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: 2px solid transparent;
+                transition: all 0.3s ease-in-out, box-shadow 0.3s ease;
+                font-size: 16px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                position: relative;
+            }
+
+                /* Hover Effects for Links */
+                header a:hover {
+                    background: #002a5e;
+                    color: #ff9800;
+                    transform: translateY(-4px);
+                    border-color: #fff;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                /* Focus Effect for Accessibility */
+                header a:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.4);
+                }
+
+        /* 🌟 Dropdown Menu with Advanced 3D Effects */
+        .dropdown {
+            position: relative;
+            perspective: 1500px; /* 🔥 Stronger 3D effect */
+            align-items: center;
+        }
+
+        /* 🎨 Submenu - Floating Glass Effect with Neon Glow */
+        .submenu {
+            display: none;
+            position: absolute;
+            min-width: 240px;
+            top: 100%;
+            left: 0;
+            border-radius: 12px;
+            padding: 12px 0;
+            background: linear-gradient(135deg, #0a192ff2, #1e3a6bf2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 153, 255, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: rotateX(-20deg) translateY(15px) scale(0.98);
+            transform-origin: top;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.3s;
+        }
+
+        /* 🎭 3D Dropdown Reveal */
+        .dropdown:hover .submenu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: rotateX(0) translateY(0) scale(1);
+        }
+
+        /* 🚀 Dropdown Items - Elevated & Dynamic */
+        .submenu li {
+            display: block;
+            padding: 14px 20px;
+            transition: background 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+            /* ✨ Last Item - No Border */
+            .submenu li:last-child {
+                border-bottom: none;
+            }
+
+            /* 🎨 Submenu Links - High-End Look */
+            .submenu li a {
+                color: white;
+                display: block;
+                font-size: 17px;
+                font-weight: bold;
+                text-transform: capitalize;
+                padding: 16px 28px;
+                border-radius: 8px;
+                transition: color 0.3s, padding-left 0.3s, transform 0.3s, text-shadow 0.3s ease-in-out;
+            }
+
+            /* 🔥 3D Lift & Neon Glow */
+            .submenu li:hover {
+                background: linear-gradient(90deg, #002a5e, #004b8d);
+                transform: translateX(8px) scale(1.08) rotateX(6deg);
+                box-shadow: 0 15px 35px rgba(255, 204, 0, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.2);
+                border-radius: 12px;
+            }
+
+            /* 🌟 Link Hover - Glowing Neon & Underline Animation */
+            .submenu li a:hover {
+                color: #ffdd57;
+                padding-left: 26px;
+                text-shadow: 0 0 12px rgba(255, 221, 87, 0.8), 0 0 25px rgba(255, 221, 87, 0.6);
+                transform: scale(1.1);
+            }
+
+            /* ✨ Animated Underline Effect */
+            .submenu li a::after {
+                content: "";
+                display: block;
+                height: 3px;
+                width: 0;
+                background: linear-gradient(to right, #ffdd57, #ff9800);
+                transition: width 0.4s ease-in-out;
+            }
+
+            .submenu li a:hover::after {
+                width: 100%;
+            }
+
+        /* 📱 Responsive Dropdown - Mobile Optimization */
+        @media (max-width: 768px) {
+            .submenu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                background: rgba(0, 63, 107, 0.95);
+            }
+
+                .submenu li {
+                    padding: 16px 24px;
+                }
+
+                    .submenu li a {
+                        font-size: 16px;
+                        padding: 14px 22px;
+                    }
+
+                    .submenu li:hover {
+                        transform: none;
+                    }
+        }
+
+             .search-container {
+                position: relative;
+                 display: flex;
+                 align-items: center;
+                 right: -40px;
+                     }
+
+                     .search-input {
+                        opacity: 0;
+                        width: 0;
+                        padding: 15px 0;
+                        border: none;
+                        border-radius: 10px;
+                        font-size: 16px;
+                        outline: none;
+                        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                        transition: width 0.4s ease, opacity 0.4s ease;
+                             }
+
+                         .search-input.active {
+                                opacity: 1;
+                                width: 150px;
+                                padding: 11px 11px;
+                                }
+
+                            .search-button {
+                                background: none;
+                                border: none;
+                                cursor: pointer;
+                                color: white;
+                                position: absolute;
+                                right: 10px;
+                                font-size: 18px;
+                                    }
+
+                            .search-button i {
+                                transition: transform 0.2s;
+                                     }       
+
+                             .search-button:hover i {
+                              transform: scale(1.2);
+                                 } 
+
+
+
+
+     /* Navigation Style */
+        .nav-bar {
+    margin-top: 80px;
+    background: linear-gradient(to right, #ff8a8a, #f9cab3, #a3f89e, #fffb93);
+    padding: 25px 40px;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.4s ease-in-out;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10 ;
+    flex-wrap: wrap;
+      
+}
+/* Base nav-btn style */
+.nav-bar .nav-btn {
+    position: relative;
+    color: black;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 1;
+    background-color: transparent;
+}
+
+/* Animated border appears only on hover */
+.nav-bar .nav-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 6px;
+    background: linear-gradient(
+    45deg,
+    #8a2be2,   /* electric violet */
+    #00ffff,   /* neon cyan */
+    #ff1493,   /* deep pink */
+    #00ff00    /* lime */
+);
+
+    background-size: 300% 300%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    animation: border-run 2s linear infinite;
+    mask: 
+        linear-gradient(#ffffff 0 0) content-box, 
+        linear-gradient(#ffffff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+}
+
+/* Show border on hover */
+.nav-bar .nav-btn:hover::before {
+    opacity: 1;
+}
+
+/* Optional lift + text glow on hover */
+.nav-bar .nav-btn:hover {
+    color: hsl(0, 100%, 1%);
+    transform: translateY(-2px);
+    background: transparent;
+}
+
+/* Animation for running border effect */
+@keyframes border-run {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+
+          
+.heading-box {
+  max-width: 100%;
+  padding: 25px 20px;
+  background: linear-gradient(90deg, #ff8a8a, #f9cab3, #a3f89e, #faff93);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.heading-box h1 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  white-space: nowrap;
+  display: inline-block;
+  background: linear-gradient(45deg, #6304fc, #033ef0, #06cdff, #fe07d5, #ae07f6);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: marqueeScroll 12s linear infinite, gradientMove 8s linear infinite;
+  letter-spacing: 3px;
+}
+
+.heading-box i {
+  margin-left: 15px;
+  color: #00bfff;
+  animation: float 2s infinite ease-in-out;
+}
+
+/* Marquee scroll effect */
+@keyframes marqueeScroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Gradient moving inside text */
+@keyframes gradientMove {
+  0% { background-position: 0%; }
+  100% { background-position: 300%; }
+}
+
+/* Optional floating icon */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Pause scroll on hover */
+.heading-box:hover h1 {
+  animation-play-state: paused;
+}
+
+/* Responsive scaling */
+@media (max-width: 600px) {
+  .heading-box h1 {
+    font-size: 2.4rem;
+  }
+}
+
+     
+.hero {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: black;
+    padding: 40px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    transition: 
+        background-image 1s ease-in-out,
+        background-color 0.5s ease,
+        transform 0.5s ease,
+        opacity 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+
+/* Floating Arrow Buttons */
+.hero .arrow-btn {
+    background-color: rgba(0, 0, 0, 0.3); /* Slightly darker background */
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 28px; /* Larger size for better visibility */
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
+    z-index: 1; /* Ensure it sits on top */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Soft shadow */
+    transition: all 0.3s ease;
+}
+
+.hero .arrow-btn:hover {
+    background-color: rgba(0, 0, 0, 0.6); /* Darken slightly when hovering */
+    transform: translateY(-50%) scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.5); /* Glowing effect */
+}
+
+/* Left and Right Button Positioning */
+.hero .left {
+    left: 20px; /* Position the left button on the left side */
+}
+
+.hero .right {
+    right: 20px; /* Position the right button on the right side */
+}
+.news-updates {
+  padding: 80px 30px;
+  text-align: center;
+  background: linear-gradient(135deg, #7ab5fc, #86dcc0, #67acf1, #d988f2, #f98383);
+  background-size: 300% 300%;
+  animation: gradientMove 20s ease infinite;
+  color: #1d0202;
+}
+
+.news-updates h2 {
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #120101;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1.5px;
+  font-weight: 800;
+}
+
+.news-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.news-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.news-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.news-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.news-item h3 {
+  font-size: 1.8rem;
+  color: #090101;
+  margin-bottom: 15px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.news-item p {
+  font-size: 1.1rem;
+  color: #000000;
+  margin-bottom: 25px;
+}
+
+.news-item .date {
+  font-size: 0.9rem;
+  color: #140101;
+  font-style: italic;
+}
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.wrapper {
+  
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      max-width: 1400px;
+      margin: auto;
+      margin-top: 10px;
+     
+    }
+    .steps-container {
+      margin-top: 50px;
+      width: 50%; /* Set width to make the containers side-by-side */
+      background: linear-gradient(45deg,#000,#191818,#575f60,#242424,#030b16);
+      color:#f8f8f8;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      animation: borderAnimation 3s infinite; /* 3s for the duration of each cycle */
+    }
+    /* Keyframes for animating the border */
+@keyframes borderAnimation {
+  0% {
+    border: 3px solid #0077ff; /* Initial border color */
+  }
+  50% {
+    border: 3px solid #ff2600; /* Midway border color */
+  }
+  100% {
+    border: 3px solid #00ff04; /* Final border color */
+  }
+}
+
+    .step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .step:hover {
+      background: linear-gradient(to right,#037a17,#2f8134);
+      color: rgb(255, 252, 252);
+      transform: scale(1.05);
+      border-radius: 20px;
+    }
+    
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      background:#6ded05;
+      color: rgb(0, 0, 0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 15px;
+      border: 2px;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: #fffbfb;
+    }
+    
+     .step1 {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .step1:hover {
+      background: linear-gradient(to right,#4294ff,#0077ff);
+      color: #fffdfd;
+      transform: scale(1.05);
+      border-radius: 20px;
+    }
+    
+    .step1-icon {
+      width: 40px;
+      height: 40px;
+      background:rgb(0, 145, 255);
+      color: #050505;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 15px;
+      border: 2px;
+    }
+    .step1-content {
+      flex: 1;
+    }
+    .step1-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .step1-desc {
+      font-size: 14px;
+      color: #fffbfb;
+    }
+    
+
+    /* Modal (Pop-up) Styles */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    @keyframes neon-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.modal-content {
+  position: relative;
+  background:linear-gradient(to right,#000,#00bfff,#000);
+  padding: 20px;
+  border-radius: 10px;
+  width: 45%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+
+
+/* Modal Image Styling */
+.modal img {
+  width: 450px;      /* Fixed width of 400px */
+  height: 350px;     /* Fixed height of 300px */
+  object-fit: contain; /* Ensures the image fits within the box while keeping the aspect ratio */
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+   
+
+.services {
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.service-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2.2rem;
+    margin-top: 2rem;
+}
+
+.service-item {
+    position: relative;
+    overflow: hidden;
+    background: #f9f9f9;
+    border-radius: 0.625rem;
+    padding: 1rem;
+    box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+    max-width: 100%;
+}
+
+/* Light Border Base - hidden initially */
+.service-item::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(
+    270deg,
+    #590ca2,   /* electric violet */
+    #00ffff,   /* neon cyan */
+    #0ad9e0,   /* deep pink */
+    #00ff00    /* lime */
+);
+    background-size: 800% 800%;
+    border-radius: 0.75rem;
+    filter: blur(4px);
+    z-index: 0;
+    opacity: 0; /* Hide lights initially */
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effect */
+.service-item:hover {
+    transform: translateY(-8px);
+    background: #111; /* Dark background to boost neon effect */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animate border lights on hover */
+.service-item:hover::before {
+    opacity: 1; /* Show lights */
+    animation: neon-border 4s linear infinite; /* Start running lights */
+}
+
+/* Keyframes for running lights */
+@keyframes neon-border {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Layer content above the running border */
+.service-item > * {
+    position: relative;
+    z-index: 1;
+}
+
+.service-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.625rem;
+}
+
+.service-item h3 {
+    margin-top: 0.75rem;
+    font-size: 1.125rem;
+}
+
+.service-item h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.services h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.services p {
+    font-size: 2rem;
+    max-width: 60ch;
+    margin: 0 auto 2rem;
+}
+
+
+
+        /* Responsive Design */
+        @media only screen and (min-width: 1200px){
+            .service-item {
+                width: 45%; /* Make the service items take more width on mobile */
+                padding: 20px; /* Reduced padding for smaller screens */
+                align-items: auto auto auto;
+                gap: 20px;
+            }
+
+                .service-item:hover {
+                    transform: translateY(-5px); /* Slightly reduce hover effect for mobile */
+                }
+
+            /* Stack service items vertically for smaller screens */
+            .service-box {
+                justify-content: center;
+            }
+
+            .service-item {
+                width: 100%; /* Full width for service items on small screens */
+                margin-bottom: 20px; /* Reduced space between items on mobile */
+            }
+        }
+        .service-item {
+                width: 45%; /* Make the service items take more width on mobile */
+                padding: 20px; /* Reduced padding for smaller screens */
+            }
+
+                .service-item:hover {
+                    transform: translateY(-5px); /* Slightly reduce hover effect for mobile */
+                }
+
+            /* Stack service items vertically for smaller screens */
+            .service-box {
+                justify-content: center;
+            }
+
+            .service-item {
+                width: 100%; /* Full width for service items on small screens */
+                margin-bottom: 20px; /* Reduced space between items on mobile */
+            }
+        
+    
+        /* Basic dropdown styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: #000;
+                padding: 10px 15px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f0f0f0;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Optional: style to match other header buttons */
+        .header-btn {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #000;
+        }
+        
+
+        @media (max-width: 2048px) {
+  .service-box {
+    gap: 3rem;
+    padding: 0.5rem;
+  }
+
+  .service-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+    }
+
+    /* footer stylishhhh */
+
+    footer {
+    background-color: #daeafc;
+    color: #000000;
+    padding: 40px 0;
+            }
+
+        footer .footer-container {
+         display: flex;
+         justify-content: space-between;
+         align-items: flex-start;
+         max-width: 1200px;
+         margin: 0 auto;
+        }
+        footer .footer-logo 
+        {
+         text-align: center;
+         }
+
+        footer .footer-logo img {
+          max-height: 70px;
+          width: auto;
+          height: auto;
+          display: block;
+          margin: 0 auto 10px;
+        }
+
+        footer .footer-logo p {
+       
+        margin: 3px 0;
+        }
+
+
+        footer .footer-links,
+        footer .footer-consumer,
+        footer .footer-gov {
+        width: 20%;     
+        }
+
+        footer .footer-links h6,
+        footer .footer-consumer h6,
+        footer .footer-gov h6 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+                }
+
+        footer .footer-links ul,
+        footer .footer-consumer ul,
+        footer .footer-gov ul{
+         list-style: none;
+         padding-left: 0;
+            }
+            footer .footer-links p{
+                font-size: 1.2rem;
+            }
+
+        footer .footer-links ul li,
+        footer .footer-consumer ul li,
+        footer .footer-gov ul li {
+            margin-bottom: 10px;
+                }
+
+        footer .footer-links ul li a {
+        color: #040000;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+            }
+
+        footer .footer-links ul li a:hover {
+        color: #ff6f00;
+            }
+
+        footer .footer-gov ul li a {
+        color: #020000;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+        }
+
+        footer .footer-gov a:hover {
+        color: #ff6f00;
+        }
+
+
+        .footer-social {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    
+}
+
+.social-icon {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.social-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+        /* Mobile Responsiveness */
+
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .footer-logo {
+        flex: 1 1 250px;
+    }
+
+    .footer-links,
+    .footer-gov {
+        flex: 1 1 200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    footer {
+        padding: 40px 60px;
+    }
+
+    .footer-logo img {
+        max-width: 200px;
+    }
+}
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="images/DWD LOGO.png" alt="Dalaguete Water District Logo">
+            <a href="index.html">       <span class="title">DALAGUETE WATER DISTRICT</span> </a>  
+            </div>
+        <ul>
+            <li class="dropdown">
+                <a href="#"><i class="fas fa-info-circle"></i> About DWD</a>
+                <ul class="submenu">
+                    <li><a href="links/profile.html">Profile</a></li>
+                    <li><a href="links/about.html">Mission-Vision</a></li>
+                </ul>
+            </li>
+            <li><a href="links/faqs.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+            <li><a href="links/contactus.html"><i class="fas fa-address-book"></i> Contact Us</a></li>
+            
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+                <button class="search-button" id="searchToggle">
+                  <i class="fas fa-search" id="searchIcon"></i>
+                </button>
+            </div>
+            
+        </ul>
+    </header>
+
+    <nav class="nav-bar">
+        <a href="waterrates/waterrates.html" class="nav-btn">Water Rates</a>
+        <a href="links/billing.html" class="nav-btn">Billing Schedule</a>
+        <a href="links/calculator.html" class="nav-btn">WaterBill Calculator</a>
+        <a href="links/trans.html" class="nav-btn">Transparency Seal</a>
+        <a href="links/bids.html" class="nav-btn">Bids & Awards</a>
+        <a href="links/survey.html" class="nav-btn">Consumer Survey</a>
+        <a href="links/citizen.html" class="nav-btn">Citizen Charter</a>
+
+    </nav>
+
+    <div class="heading-box">
+        <h1>WELCOME TO DALAGUETE WATER DISTRICT</h1>
+      </div>
+      <div class="hero">
+        <button id="heroPrevBtn" class="arrow-btn left">
+            <i class="fas fa-chevron-left"></i> <!-- Font Awesome left arrow -->
+        </button>
+        <button id="heroNextBtn" class="arrow-btn right">
+            <i class="fas fa-chevron-right"></i> <!-- Font Awesome right arrow -->
+        </button>
+    </div>
+    
+    <section class="news-updates" id="news-section">
+        <h2>📢 News & Updates</h2>
+        
+        <div class="news-container" id="news-container">
+          <!-- News Item Example -->
+          <div class="news-item">
+            <h3>New Water Service Connections Available!</h3>
+            <p>Starting May 2025, we are expanding water connections to new areas. Apply now and enjoy our reliable service!</p>
+            <span class="date">April 26, 2025</span>
+          </div>
+      
+          <div class="news-item">
+            <h3>Maintenance Advisory: Scheduled Water Interruption</h3>
+            <p>Visit our FACEBOOK PAGE @dalaguete water district for more Info</p>
+            <span class="date">April 24, 2025</span>
+          </div>
+      
+          <div class="news-item">
+            <h3>Online Payment Now Available!</h3>
+            <p>Pay your water bill easily using GCash or Maya! Just visit our page to see how to pay using the GCash app and Maya app!</p>
+            <span class="date">April 20, 2025</span>
+          </div>
+        </div>
+        </section>
+
+        <section class="section-background">
+            <div class="wrapper">
+                <!-- Maya Steps for Paying Water Bill -->
+                <div class="steps-container">
+                    <h2 style="
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 28px;
+                font-weight: 700;
+                color: #ffffff;
+                background: linear-gradient(to right, #17e9008d, #08aa3e);
+                padding: 12px 20px;
+                border-left: 10px solid #fff700;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px #0234ea1a;
+                margin: 20px 0;">
+                Pay Water Bill via Maya
+            </h2>
+                  <div class="step" id="mayaStep1">
+                    <div class="step-icon">1</div>
+                    <div class="step-content">
+                      <div class="step-title">Open Maya App</div>
+                      <div class="step-desc">Launch the Maya app on your device.</div>
+                    </div>
+                  </div>
+                  <div class="step" id="mayaStep2">
+                    <div class="step-icon">2</div>
+                    <div class="step-content">
+                      <div class="step-title">Navigate to Bills</div>
+                      <div class="step-desc">Go to the 'Bills' section in the app.</div>
+                    </div>
+                  </div>
+                  <div class="step" id="mayaStep3">
+                    <div class="step-icon">3</div>
+                    <div class="step-content">
+                      <div class="step-title">Select Water Utilities</div>
+                      <div class="step-desc">Search 'Dalaguete Water District'</div>
+                    </div>
+                  </div>
+                  <div class="step" id="mayaStep4">
+                    <div class="step-icon">4</div>
+                    <div class="step-content">
+                      <div class="step-title">Enter Details</div>
+                      <div class="step-desc">Fill in your account number and amount.</div>
+                    </div>
+                  </div>
+                  <div class="step" id="mayaStep5">
+                    <div class="step-icon">5</div>
+                    <div class="step-content">
+                      <div class="step-title">Confirm Payment</div>
+                      <div class="step-desc">Review details and confirm the payment.</div>
+                    </div>
+                  </div>
+                </div>
+            
+                <!-- GCash Steps for Paying Water Bill -->
+                <div class="steps-container">
+                    <h2 style="
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 28px;
+                    font-weight: 700;
+                    color: #f5fbf6;
+                    background: linear-gradient(to right, #0095ff, #058fff);
+                    padding: 12px 20px;
+                    border-left: 10px solid #fbff00;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px #0000001a;
+                    margin: 20px 0;">
+                    Pay Water Bill via Gcash
+                </h2>
+                  <div class="step1" id="gcashStep1">
+                    <div class="step1-icon">1</div>
+                    <div class="step1-content">
+                      <div class="step1-title">Open GCash App</div>
+                      <div class="step1-desc">Launch the GCash app on your device.</div>
+                    </div>
+                  </div>
+                  <div class="step1" id="gcashStep2">
+                    <div class="step1-icon">2</div>
+                    <div class="step1-content">
+                      <div class="step1-title">Navigate to Bills</div>
+                      <div class="step1-desc">Go to the 'Pay Bills' section.</div>
+                    </div>
+                  </div>
+                  <div class="step1" id="gcashStep3">
+                    <div class="step1-icon">3</div>
+                    <div class="step1-content">
+                      <div class="step1-title">Select Water Utilities</div>
+                      <div class="step1-desc">Search 'Dalaguete Water District'</div>
+                    </div>
+                  </div>
+                  <div class="step1" id="gcashStep4">
+                    <div class="step1-icon">4</div>
+                    <div class="step1-content">
+                      <div class="step1-title">Enter Details</div>
+                      <div class="step1-desc">Enter the necessary account number and amount.</div>
+                    </div>
+                  </div>
+                  <div class="step1" id="gcashStep5">
+                    <div class="step1-icon">5</div>
+                    <div class="step1-content">
+                      <div class="step1-title">Confirm Payment</div>
+                      <div class="step1-desc">Review and confirm your water bill payment.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <!-- Modal (Pop-up Image) -->
+              <div id="paymentModal" class="modal">
+                <div class="modal-content">
+                  <span class="close" id="closeModal">&times;</span>
+                  <img src="" id="modalImage" alt="Payment Step Image" />
+                </div>
+              </div>
+       
+        
+    
+        </section>
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2>Our Services</h2>
+        <p>We provide reliable water services to the community. Explore our services, water rates, and much more.</p>
+
+        <div class="service-box">
+                <!-- Service 1 -->
+    
+            <div class="service-item">
+                <a href="links/calculator.html" target="_blank"><img src="images/imagecalcu.png" alt="Image 1"></a>
+                <h3><a href="links/calculator.html">Water Bill Calculator</a></h3>
+
+             </div>
+            <!-- Service 2 -->
+            
+            <div class="service-item">
+                <a href="links/online.html" target="_blank"><img src="images/gcash.png" alt="Image 1"></a>
+                <h3><a href="links/online.html"> How to Pay Using GCash</a></h3>
+
+            </div>
+            <!-- Service 3 -->
+            
+            <div class="service-item">
+               <a href="links/billing.html" target="_blank"><img src="images/billingcalendar.png" alt="Image 3"></a>
+                <h3><a href="links/billing.html"> Billing Schedule  </a></h3>
+
+            </div>
+            <!-- Service 4 -->
+            
+            <div class="service-item">
+                <a href="links/inquiry.html" target="_blank"><img src="images/billinginquiry.png" alt="Image 3"></a>
+                <h3><a href="links/inquiry.html"> Billing Inquiry</a></h3>
+               
+            </div>
+
+            <!-- Service 5 -->
+            
+            <div class="service-item">
+                
+                <a href="links/survey.html" target="_blank"><img src="images/pic4.jpg" alt="Image 4"></a>
+                <h3><a href="links/survey.html"> Consumer Survey </a></h3>
+
+            </div>
+            <!-- Service 6 -->
+            
+            <div class="service-item">
+                
+                 <a href="links/profile2.html" target="_blank"><img src="images/pic3.jpg" alt="Image 3"></a>
+                
+                 
+            </div>
+            <!-- Service 7 -->
+            
+            <div class="service-item">
+                <a href="https://www.coa.gov.ph/" target="_blank">
+                    <img src="images/coa.png" alt="Image 3" style="width:300px; height:250px;">
+                  </a>
+                  
+            </div>
+            <!-- Service 8 -->
+            <div class="service-item">
+                <a href="https://dalaguete.gov.ph/" target="_blank"><img src="images/MOD.jpg" alt="Image 3"></a>
+                
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h6>&copy; 2025 Dalaguete Water District</h6>
+                <p>Located at Osorio Building</p>
+                <p>Sarmiento Street</p>
+                <p>Poblacion Dalaguete, Cebu</p>
+                <p><i class="fas fa-phone-alt"></i> (032) 484-8724</p>
+                <div class="footer-social" style="margin-top: 0 auto;">
+                    <div class="social-icon">
+                        <span class="tooltip">Facebook</span>
+                        <a href="https://www.facebook.com/dalaguetewaterdistrictofficial" target="_blank" style="color: #0755f0;">
+                            <i class="fab fa-facebook-f fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <span class="tooltip">Gmail</span>
+                        <a href="mailto:dalaguetewd@gmail.com" style="color: #ce1b07;">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <span class="tooltip">Yahoo Mail</span>
+                        <a href="mailto:dalaguetewd@yahoo.com.ph" style="color: #a706dd;">
+                            <i class="fab fa-yahoo fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <p id="clock" style="margin-top: 10px; font-weight: bold; color: #030200; line-height: 1.4;">
+                    
+                    <span id="clock-time" style="display: block; font-size: 1.1em;"></span>
+                    <span id="clock-date" style="display: block; font-size: 0.9em; font-weight: normal;"></span>
+                </p>
+                
+            </div>
+                 <div class="footer-links">
+                    <h6>Transparency</h6>
+                    <ul>
+                        <li><a href="links/about.html">About Us</a></li>
+                        <li><a href="links/citizen.html">Citizen Charter</a></li>
+                        <li><a href="links/bids.html">Bids & Awards</a></li>
+                        <li><a href="links/faqs.html">FAQs</a></li>
+                        <li><a href="links/contactus.html">Contact Us</a></li>
+                        <li><a href="links/profile.html">Profile</a></li>
+                   
+                
+                    </ul>
+            </div>
+            <div class="footer-links">
+                <h6> Consumer </h6>
+                <ul>
+                    <li><a href="waterrates/waterrates.html">Water Rates</a></li>
+                    <li><a href="links/calculator.html">Water Bill Calculator</a></li>
+                    <li><a href="links/billing.html">Billing Schedule</a></li>
+                    <li><a href="links/inquiry.html">Billing Inquiry</a></li>
+                   
+                </ul>
+            </div>
+            <div class="footer-gov">
+                <h6>Government Links</h6>
+                <ul>
+                  
+                    <li><a  href="http://president.gov.ph/">Office of the President</a></li>
+                    <li><a  href="http://ovp.gov.ph/">Office of the Vice President</a></li>
+                    <li><a  href="http://www.senate.gov.ph/">Senate of the Philippines</a></li>
+                    <li><a  href="http://www.congress.gov.ph/">House of Representatives</a></li>
+                    <li><a  href="http://sc.judiciary.gov.ph/">Supreme Court</a></li>
+                    <li><a  href="http://ca.judiciary.gov.ph/">Court of Appeals</a></li>
+                    <li><a  href="http://sb.judiciary.gov.ph/">Sandiganbayan</a></li>
+                 
+                </ul>
+            </div>
+      
+    </footer>
+    <!-- Clock Script -->
+    <script>
+        // CLOCK UPDATER
+        function updateClock() {
+            const timeEl = document.getElementById("clock-time");
+            const dateEl = document.getElementById("clock-date");
+        
+            const now = new Date();
+            const timeString = now.toLocaleTimeString(); // e.g., 2:45:12 PM
+            const dateString = now.toLocaleDateString(undefined, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        
+            timeEl.textContent = timeString;
+            dateEl.textContent = dateString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+        </script>
+        
+        <script>
+        // HERO BACKGROUND IMAGE SLIDER
+        const images = [
+            'wallpaper/allDWD.png',
+            'wallpaper/alldwd.jpg',
+            'wallpaper/alldwd2.jpg',
+            'wallpaper/alldwd3.jpg',
+            'wallpaper/alldwd4.jpg',
+            'wallpaper/alldwd6.jpg',
+            'wallpaper/alldwd7.jpg'
+        ];
+        
+        let index = 0;
+        const heroSection = document.querySelector('.hero');
+        const heroPrevBtn = document.getElementById('heroPrevBtn');
+        const heroNextBtn = document.getElementById('heroNextBtn');
+        
+        function updateBackground() {
+            heroSection.style.backgroundImage = `url('${images[index]}')`;
+        }
+        
+        // Initial load
+        updateBackground();
+        
+        // Next button
+        heroNextBtn.addEventListener('click', () => {
+            index = (index + 1) % images.length;
+            updateBackground();
+        });
+        
+        // Previous button
+        heroPrevBtn.addEventListener('click', () => {
+            index = (index - 1 + images.length) % images.length;
+            updateBackground();
+        });
+        
+        // Auto-change every 7 seconds
+        setInterval(() => {
+            index = (index + 1) % images.length;
+            updateBackground();
+        }, 7000);
+        </script>
+        
+        <script>
+        // FADE-IN NEWS ITEMS ON SCROLL
+        const newsItems = document.querySelectorAll('.news-item');
+        
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        newsItems.forEach(item => {
+            observer.observe(item);
+        });
+        </script>
+        
+        <script>
+    // Get the modal and modal image elements
+    const modal = document.getElementById("paymentModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeModal = document.getElementById("closeModal");
+
+    // Maya Steps Images
+    const mayaImages = {
+      mayaStep1: "images/maya1.png",
+      mayaStep2: "images/maya2.png",
+      mayaStep3: "images/maya3.png",
+      mayaStep4: "images/maya4.png",
+      mayaStep5: "images/maya5.png",
+    };
+
+    // GCash Steps Images
+    const gcashImages = {
+      gcashStep1: "images/step1.png",
+      gcashStep2: "images/step2.png",
+      gcashStep3: "images/step3.png",
+      gcashStep4: "images/step4.png",
+      gcashStep5: "images/step5.jpg",
+    };
+
+    // Click event listener for each Maya and GCash step
+ 
+    const steps = document.querySelectorAll('.step1,.step');
+    steps.forEach(step => {
+      step.addEventListener('click', () => {
+        const stepId = step.id;
+        
+        if (mayaImages[stepId]) {
+          modalImage.src = mayaImages[stepId]; // Set the appropriate Maya step image
+        } else if (gcashImages[stepId]) {
+          modalImage.src = gcashImages[stepId]; // Set the appropriate GCash step image
+        }
+        
+        // Show the modal
+        modal.style.display = "flex";
+      });
+    });
+
+    // Close modal when clicking the close button
+    closeModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    // Close modal if user clicks outside of the modal content
+    window.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+        
+    
+
+
+
+</body>
+</html>

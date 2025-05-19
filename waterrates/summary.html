@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../images/DWD LOGO.png" type="image/png" />
+    <title>Water Rates Summary</title>
+    <style>
+        /* Body Styling */
+        body {
+            text-align: center;
+            background: linear-gradient(135deg, #001F3F, #0074D9); /* Deep blue gradient */
+            padding: 40px;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+        }
+
+        /* Title Styling */
+        h2 {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+            .back-btn:hover {
+                background: linear-gradient(135deg, #0056b3, #004494);
+                transform: scale(1.12) rotate(-2deg);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+                border: 2px solid white;
+            }
+
+            .back-btn:active {
+                transform: scale(1.05) rotate(0deg);
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        p {
+            font-size: 22px;
+            margin-bottom: 35px;
+        }
+
+        /* Grid Container for Images */
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px; /* Increased space between images */
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+            /* Image Styling - Bigger & High-Quality */
+            .image-container img {
+                width: 500px; /* Increased size */
+                height: auto;
+                border-radius: 15px;
+                box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.6);
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
+                background: white;
+                padding: 12px;
+            }
+
+                /* Hover Effect */
+                .image-container img:hover {
+                    transform: scale(1.12);
+                    box-shadow: 0px 15px 30px rgba(255, 255, 255, 0.5);
+                    filter: brightness(1.1);
+                }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .image-container img {
+                width: 90%; /* Make images larger on medium screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .image-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+                .image-container img {
+                    width: 100%; /* Full width on mobile */
+                }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>WATER RATES SUMMARY</h2>
+    <p>Check out the latest water rate summaries below:</p>
+    <a href="../index.html" class="back-btn">⬅ Back</a>
+    <div class="image-container">
+        <img src="1.png" alt="Water Rate 1">
+        <img src="2.png" alt="Water Rate 2">
+        <img src="3.png" alt="Water Rate 3">
+        <img src="4.png" alt="Water Rate 4">
+        <img src="5.png" alt="Water Rate 5">
+    </div>
+
+</body>
+</html>
