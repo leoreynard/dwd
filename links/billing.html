@@ -1,10 +1,10 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="../images/DWD LOGO.png" type="image/png" />
     <title>Billing and Reading Schedule </title>
     <style>
@@ -13,8 +13,10 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0 auto;
-            padding: 0;
-            
+            padding: 0 auto ;
+           
+     
+      
             
         }
         header {
@@ -126,6 +128,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+           
         }
 
         th, td {
@@ -133,6 +136,7 @@
             padding: 10px;
             text-align: center;
             cursor: pointer;
+           
             
            
            
@@ -296,18 +300,18 @@ footer {
         footer .footer-gov ul{
          list-style: none;
          padding-left: 0;
-
             }
             footer .footer-links p{
                 font-size: 1.2rem;
                 text-align: left;
+
             }
 
         footer .footer-links ul li,
         footer .footer-consumer ul li,
         footer .footer-gov ul li {
             margin-bottom: 10px;
-            text-align: left;
+            text-align: left;   
                 }
 
         footer .footer-links ul li a {
@@ -343,7 +347,7 @@ footer {
 .social-icon {
     position: relative;
     display: inline-block;
-    text-align: center;
+    text-align: left;
 }
 
 .tooltip {
@@ -415,6 +419,7 @@ footer {
     padding: 20px;
     margin: 30px auto;
     padding-top: 70px;
+    margin-bottom: -70px;
   }
 
   #billing-schedule::after {
@@ -439,7 +444,54 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* subtle shadow */
     transform: scale(1.01); /* slight zoom */
 }
+h2 {
+      
+      margin-top: 100px;
+    }
 
+    select {
+      padding: 5px;
+      margin: 5px;
+    
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      padding:50px 50px;
+     
+
+    }
+
+    .day, .date {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .day {
+      font-weight: bold;
+      background: #f0f0f0;
+    }
+
+    .holiday {
+      background-color: #ffcccc;
+      color: red;
+      font-weight: bold;
+    }
+
+    .reading-date {
+      background-color: #d0f0c0;
+      font-weight: bold;
+    }
+
+    .today {
+      background-color: #fdfd96;
+    }
+
+    .adjust-note {
+      font-size: 10px;
+    }
 
 
     </style>
@@ -456,11 +508,163 @@ footer {
             <li><a href="../links/contactus.html"><i class="fas fa-address-book"></i> Contact Us</a></li>
         </ul>
     </header>
+     <h2>Dynamic Billing Calendar</h2>
+
+  <div>
+    <label for="monthSelect">Month:</label>
+    <select id="monthSelect"></select>
+
+    <label for="yearSelect">Year:</label>
+    <select id="yearSelect"></select>
+  </div>
+
+  <div class="calendar" id="calendar"></div>
+
+  <script>
+    const calendar = document.getElementById("calendar");
+    const monthSelect = document.getElementById("monthSelect");
+    const yearSelect = document.getElementById("yearSelect");
+
+    const holidayDates = [
+      "01-01", "01-27", "01-29",
+      "02-25",
+      "03-02", "03-31",
+      "04-01", "04-09", "04-17", "04-18", "04-19", "04-20",
+      "05-01", "05-12",
+      "06-12", 
+      "08-21", "08-25",
+      "09-05",
+      "10-31",
+      "11-01", "11-02", "11-30",
+      "12-08", "12-24", "12-25", "12-30", "12-31"
+    ];
+
+    function isHoliday(date) {
+      const md = `${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      return holidayDates.includes(md);
+    }
+
+    function renderCalendar(year, month) {
+      calendar.innerHTML = "";
+
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startDay = firstDay.getDay();
+
+      const now = new Date();
+
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      for (let day of daysOfWeek) {
+        const el = document.createElement("div");
+        el.className = "day";
+        el.textContent = day;
+        calendar.appendChild(el);
+      }
+
+      for (let i = 0; i < startDay; i++) {
+        calendar.appendChild(document.createElement("div"));
+      }
+
+      for (let day = 1; day <= lastDay.getDate(); day++) {
+        const date = new Date(year, month, day);
+        const cell = document.createElement("div");
+        cell.className = "date";
+        cell.textContent = day;
+
+        if (isHoliday(date)) {
+          cell.classList.add("holiday");
+          cell.title = "Holiday";
+        }
+
+        if (
+          day === now.getDate() &&
+          month === now.getMonth() &&
+          year === now.getFullYear()
+        ) {
+          cell.classList.add("today");
+        }
+
+        // Highlight reading date (1st), but adjust if it's a holiday or weekend
+        if (day === 1) {
+          let readingDate = new Date(year, month, 1);
+          while (isHoliday(readingDate) || readingDate.getDay() === 0 || readingDate.getDay() === 6) {
+            readingDate.setDate(readingDate.getDate() + 1);
+          }
+
+          if (readingDate.getDate() !== 1) {
+            const note = document.createElement("div");
+            note.className = "adjust-note";
+            note.textContent = `Reading Date move→ ${readingDate.getDate()}`;
+            cell.appendChild(note);
+            cell.classList.add("reading-date");
+          } else {
+            cell.classList.add("reading-date");
+            cell.title = "Reading Date";
+          }
+        }
+
+        calendar.appendChild(cell);
+      }
+    }
+
+    function populateDropdowns() {
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth();
+
+      for (let i = 0; i < 12; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = new Date(0, i).toLocaleString("default", { month: "long" });
+        if (i === currentMonth) opt.selected = true;
+        monthSelect.appendChild(opt);
+      }
+
+      for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+        const opt = document.createElement("option");
+        opt.value = y;
+        opt.textContent = y;
+        if (y === currentYear) opt.selected = true;
+        yearSelect.appendChild(opt);
+      }
+
+      renderCalendar(currentYear, currentMonth);
+    }
+
+    monthSelect.addEventListener("change", () => {
+      renderCalendar(parseInt(yearSelect.value), parseInt(monthSelect.value));
+    });
+
+    yearSelect.addEventListener("change", () => {
+      renderCalendar(parseInt(yearSelect.value), parseInt(monthSelect.value));
+    });
+
+    populateDropdowns();
+  </script>
+   
 
     <h2 id="billing-schedule">Billing and Reading Schedule</h2>
 
+
+   <div class="bg-gradient-to-r from-red-600 to-yellow-500 border-l-[20px] border-red-800 text-white p-6 rounded-xl shadow-2xl mb-6 font-sans animate-pulse hover:animate-none">
+  <h2 class="text-3xl md:text-4xl font-black mb-4 flex items-center gap-2">
+    🚨 <span>Important Billing Notice</span>
+  </h2>
+  <ul class="list-disc list-inside space-y-2 text-lg md:text-xl leading-relaxed">
+    <li>
+      📅 If a <span class="font-bold underline">Reading, Due, Penalty, or Disconnection Date</span> falls on a <span class="underline">Holiday or Weekend</span>, it will be <span class="font-bold">automatically moved</span> to the <span class="font-bold">next working day</span>.
+    </li>
+    <li>
+      ❗ <span class="font-bold underline">No disconnections are scheduled on Fridays</span>. If a disconnection falls on a Friday, it will be automatically <span class="font-bold">moved to the following Monday</span>.
+    </li>
+  </ul>
+</div>
+
     <input type="text" id="searchBox" onkeyup="filterTable()" placeholder="Search for zone or due date...">
     <table id="billingTable">
+
+
+
         <thead>
             
             <tr>
@@ -473,9 +677,9 @@ footer {
         </thead>
         <tbody>
         
+            
 
-
-            <tr onclick="showPopup('Zone 11', 1, 14, 15, 22)">
+          <tr onclick="showPopup('Zone 11', 2, 14, 15, 22)">
                 <td style="background-color: pink;">Zone 11</td>
                 <td style="background-color: pink;">1st of the month</td>
                 <td style="background-color: violet;">14th of the month</td>
@@ -483,14 +687,14 @@ footer {
                 <td style="background-color: violet;">22nd of the month</td>
             </tr>
             
-            <tr onclick="showPopup('Zone 21', 1, 14, 15, 22)">
+            <tr onclick="showPopup('Zone 21', 2, 14, 15, 22)">
                 <td style="background-color: pink;">Zone 21</td>
                 <td style="background-color: pink;">1st of the month</td>
                 <td style="background-color: violet;">14th of the month</td>
                 <td style="background-color: violet;">15th of the month</td>
                 <td style="background-color: violet;">22nd of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 31', 1, 14, 15, 22)">
+            <tr onclick="showPopup('Zone 31', 2, 14, 15, 22)">
                
                 <td style="background-color: pink;">Zone 31</td>
                 <td style="background-color: pink;">1st of the month</td>
@@ -520,123 +724,123 @@ footer {
                 <td style="background-color: violet;">15th of the month</td>
                 <td style="background-color: violet;">22nd of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 63', 3, 16, 21, 24)">
+            <tr onclick="showPopup('Zone 63', 3, 16, 21, 26)">
                 <td style="background-color: yellowgreen;">Zone 63</td>
                 <td style="background-color: yellowgreen;">3rd of the month</td>
                 <td style="background-color: pink;">16th of the month</td>
                 <td style="background-color: pink;">21st of the month</td>
-                <td style="background-color: pink;">24th of the month</td>
+                <td style="background-color: pink;">26th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 61', 3, 16, 21, 24)">
+            <tr onclick="showPopup('Zone 61', 3, 16, 21, 26)">
                 <td style="background-color: yellowgreen;">Zone 61</td>
                 <td style="background-color: yellowgreen;">3rd of the month</td>
                 <td style="background-color: pink;">16th of the month</td>
                 <td style="background-color: pink;">21st of the month</td>
-                <td style="background-color: pink;">24th of the month</td>
+                <td style="background-color: pink;">26th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 62', 4, 16, 21, 24,)">
+            <tr onclick="showPopup('Zone 62', 4, 16, 21, 26,)">
                 <td style="background-color: pink;">Zone 62</td>
                 <td style="background-color: pink;">4th of the month</td>
                 <td style="background-color: pink;">16th of the month</td>
                 <td style="background-color: pink;">21st of the month</td>
-                <td style="background-color: pink;">24th of the month</td>
+                <td style="background-color: pink;">26th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 71', 4, 16, 21, 24)">
+            <tr onclick="showPopup('Zone 71', 4, 16, 21, 26)">
                 <td style="background-color:pink;">Zone 71</td>
                 <td style="background-color: pink;">4th of the month</td>
                 <td style="background-color: pink;">16th of the month</td>
                 <td style="background-color: pink;">21st of the month</td>
-                <td style="background-color: pink;">24th of the month</td>
+                <td style="background-color: pink;">26th of the month</td>
             </tr>
             <tr onclick="showPopup('Zone 72', 7, 21, 22, 28)">
                 <td style="background-color: cornflowerblue;">Zone 72</td>
                 <td style="background-color: cornflowerblue;">7th of the month</td>
                 <td style="background-color: cornflowerblue;">21st of the month</td>
                 <td style="background-color: cornflowerblue;">22nd of the month</td>
-                <td style="background-color: cornflowerblue;">28th of the month</td>
+                <td style="background-color: cornflowerblue;">27th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 73', 7, 21, 22, 28)">
+            <tr onclick="showPopup('Zone 73', 7, 21, 22, 27)">
                 <td style="background-color:cornflowerblue;">Zone 73</td>
                 <td style="background-color: cornflowerblue;">7th of the month</td>
                 <td style="background-color: cornflowerblue;">21st of the month</td>
                 <td style="background-color: cornflowerblue;">22nd of the month</td>
-                <td style="background-color: cornflowerblue;">28th of the month</td>
+                <td style="background-color: cornflowerblue;">27th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 74', 8, 21, 22, 28)">
+            <tr onclick="showPopup('Zone 74', 8, 21, 22, 27)">
                 <td style="background-color: orange;">Zone 74</td>
                 <td style="background-color: orange;">8th of the month</td>
                 <td style="background-color: cornflowerblue;">21st of the month</td>
                 <td style="background-color: cornflowerblue;">22nd of the month</td>
-                <td style="background-color: cornflowerblue;">28th of the month</td>
+                <td style="background-color: cornflowerblue;">27th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 81', 8, 21, 22, 28)">
+            <tr onclick="showPopup('Zone 81', 8, 21, 22, 27)">
                 <td style="background-color: orange;">Zone 81</td>
                 <td style="background-color: orange;">8th of the month</td>
                 <td style="background-color: cornflowerblue;">21st of the month</td>
                 <td style="background-color: cornflowerblue;">22nd of the month</td>
-                <td style="background-color: cornflowerblue;">28th of the month</td>
+                <td style="background-color: cornflowerblue;">27th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 82', 9, 22, 23, 29 )">
+            <tr onclick="showPopup('Zone 82', 9, 22, 23, 28 )">
                 <td style="background-color: cornflowerblue;">Zone 82</td>
                 <td style="background-color: cornflowerblue;">9th of the month</td>
                 <td style="background-color: yellow;">22nd of the month</td>
                 <td style="background-color: yellow;">23rd of the month</td>
-                <td style="background-color: yellow;">29th of the month</td>
+                <td style="background-color: yellow;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 83', 9, 22, 23, 29)">
+            <tr onclick="showPopup('Zone 83', 9, 22, 23, 28)">
                 <td style="background-color: cornflowerblue;">Zone 83</td>
                 <td style="background-color: cornflowerblue;">9th of the month</td>
                 <td style="background-color: yellow;">22nd of the month</td>
                 <td style="background-color: yellow;">23rd of the month</td>
-                <td style="background-color: yellow;">29th of the month</td>
+                <td style="background-color: yellow;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 85', 9, 22, 23, 29)">
+            <tr onclick="showPopup('Zone 85', 9, 22, 23, 28)">
                 <td style="background-color: cornflowerblue;">Zone 85</td>
                 <td style="background-color: cornflowerblue;">9th of the month</td>
                 <td style="background-color: yellow;">22nd of the month</td>
                 <td style="background-color: yellow;">23rd of the month</td>
-                <td style="background-color: yellow;">29th of the month</td>
+                <td style="background-color: yellow;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 93', 9, 22, 23, 29)">
+            <tr onclick="showPopup('Zone 93', 9, 22, 23, 28)">
                 <td style="background-color: cornflowerblue;">Zone 93</td>
                 <td style="background-color: cornflowerblue;">9th of the month</td>
                 <td style="background-color: yellow;">22nd of the month</td>
                 <td style="background-color: yellow;">23rd of the month</td>
-                <td style="background-color: yellow;">29th of the month</td>
+                <td style="background-color: yellow;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 91', 10, 22, 23, 29)">
+            <tr onclick="showPopup('Zone 91', 10, 22, 23, 28)">
                 <td style="background-color: pink;">Zone 91</td>
                 <td style="background-color: pink;">10th of the month</td>
                 <td style="background-color: yellow;">22nd of the month</td>
                 <td style="background-color: yellow;">23rd of the month</td>
-                <td style="background-color: yellow;">29th of the month</td>
+                <td style="background-color: yellow;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 92', 10, 22, 23, 29)">
+            <tr onclick="showPopup('Zone 92', 10, 22, 23, 28)">
                 <td style="background-color: pink;">Zone 92</td>
                 <td style="background-color: pink;">10th of the month</td>
                 <td style="background-color: yellow;">22nd of the month</td>
                 <td style="background-color: yellow;">23rd of the month</td>
-                <td style="background-color: yellow;">29th of the month</td>
+                <td style="background-color: yellow;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 101', 11, 25, 28, 2)">
+            <tr onclick="showPopup('Zone 101', 11, 26, 28, 2)">
                 <td style="background-color: greenyellow;">Zone 101</td>
                 <td style="background-color: greenyellow;">11th of the month</td>
-                <td style="background-color: greenyellow;">25th of the month</td>
+                <td style="background-color: greenyellow;">26th of the month</td>
                 <td style="background-color: greenyellow;">28th of the month</td>
                 <td style="background-color: greenyellow;">2nd of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 102', 11, 25, 28, 2)">
+            <tr onclick="showPopup('Zone 102', 11, 26, 28, 2)">
                 <td style="background-color: limegreen;">Zone 102</td>
                 <td style="background-color: limegreen;">11th of the month</td>
-                <td style="background-color: greenyellow;">25th of the month</td>
+                <td style="background-color: greenyellow;">26th of the month</td>
                 <td style="background-color: greenyellow;">28th of the month</td>
                 <td style="background-color: greenyellow;">2nd of the month</td>
 
             </tr>
-            <tr onclick="showPopup('Zone 103', 11, 25, 28, 2)">
+            <tr onclick="showPopup('Zone 103', 11, 26, 28, 2)">
                 <td style="background-color: limegreen;">Zone 103</td>
                 <td style="background-color: limegreen;">11th of the month</td>
-                <td style="background-color: greenyellow;">25th of the month</td>
+                <td style="background-color: greenyellow;">26th of the month</td>
                 <td style="background-color: greenyellow;">28th of the month</td>
                 <td style="background-color: greenyellow;">2nd of the month</td>
             </tr>
@@ -647,10 +851,10 @@ footer {
                 <td style="background-color: pink;">23rd of the month</td>
                 <td style="background-color: pink;">28th of the month</td>
             </tr>
-            <tr onclick="showPopup('Zone 106', 10, 25, 28, 2)">
+            <tr onclick="showPopup('Zone 106', 10, 26, 28, 2)">
                 <td style="background-color:coral;">Zone 106</td>
                 <td style="background-color:coral;">10th of the month</td>
-                <td style="background-color: coral;">25th of the month</td>
+                <td style="background-color: coral;">26th of the month</td>
                 <td style="background-color: coral;">28th of the month</td>
                 <td style="background-color: coral;">2nd of the month</td>
 
@@ -678,11 +882,31 @@ footer {
                       <p>Sarmiento Street</p>
                       <p>Poblacion Dalaguete, Cebu</p>
                       <p><i class="fas fa-phone-alt"></i> (032) 484-8724</p>
-                             <p id="clock" style="margin-top: 10px; font-weight: bold; color: #030200; line-height: 1.4;">
+                           <div class="footer-social" style="margin-top: 0 auto;">
+                    <div class="social-icon">
+                        <span class="tooltip">Facebook</span>
+                        <a href="https://www.facebook.com/dalaguetewaterdistrictofficial" target="_blank" style="color: #0755f0;">
+                            <i class="fab fa-facebook-f fa-2x"></i>
+                        </a>
+                    </div>
+                              <div class="social-icon">
+                        <span class="tooltip">Gmail</span>
+                        <a href="mailto:dalaguetewd@gmail.com" style="color: #ce1b07;">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <span class="tooltip">Yahoo Mail</span>
+                        <a href="mailto:dalaguetewd@yahoo.com.ph" style="color: #a706dd;">
+                            <i class="fab fa-yahoo fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+                <p id="clock" style="margin-top: 10px; font-weight: bold; color: #030200; line-height: 1.4;">
                     
-                              <span id="clock-time" style="display: block; font-size: 1.1em;"></span>
-                              <span id="clock-date" style="display: block; font-size: 0.9em; font-weight: normal;"></span>
-                            </p>
+                    <span id="clock-time" style="display: block; font-size: 1.1em;"></span>
+                    <span id="clock-date" style="display: block; font-size: 0.9em; font-weight: normal;"></span>
+                </p>
 
             </div>
                
@@ -731,7 +955,8 @@ footer {
     
        
 
-    <script src="../script.js"></script> 
+  
+       <script src="../script.js"></script> 
 
 </body>
 </html>
